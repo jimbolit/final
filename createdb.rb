@@ -7,6 +7,7 @@ DB = Sequel.connect(connection_string)                                          
 # Database schema - this should reflect your domain model
 DB.create_table! :purchases do
   primary_key :id
+  foreign_key :user_id
   String :title
   String :cost
   String :purchase_date
@@ -21,6 +22,13 @@ DB.create_table! :bandwagoners do
   String :comments, text: true
   Integer :number_of_items
 end
+DB.create_table! :users do
+  primary_key :id
+  String :name
+  String :email
+  String :password
+end
+
 
 # Insert initial (seed) data
 purchases_table = DB.from(:purchases)

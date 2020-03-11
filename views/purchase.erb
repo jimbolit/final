@@ -1,0 +1,36 @@
+<div class = "row">
+    <div class = "col-sm-9">
+     <i class="fas fa-trailer fa-3x"></i>
+        <h1 class = "mt-3"> <%= @purchase[:title] %> </h1>
+        
+        <div class = "media">
+            <h3 class = "mt-4"><%= @purchase[:cost] %> </h3>
+            <div class = "media-body align-self-end ml-5">
+                <a href="/purchase/<%=@purchase[:id]%>/bandwagoner/new" class="btn btn-primary"> Join the bandwagon! </a>
+            </div>    
+        </div>
+        <h3 class = "mt-5"> Final date to get on board: <%= @purchase[:purchase_date] %> </h3>
+        <h3 class = "mt-5"> What the first bandwagoner is saying </h3>
+            <p class = "mt-2"> <%= @purchase[:comments] %></p>
+        <h3 class = "mt-5"> Other members on the bandwagon </h3>
+             <div class="media mt-3">
+                <i class="fas fa-guitar fa-3x align-self-start mt-0"></i> 
+                <div class="media-body ml-3">
+                            <h3> James </h3>
+                            <p> comment comment comment </p>
+                </div>
+            </div>
+    </div>
+     <div class="col-sm-3">
+        <h3 class = "mt-5" >Total number of bandwagoners</h3>
+        <div class="media mt-3">
+             <i class="fas fa-guitar fa-2x align-self-start mt-0"></i> 
+             <div class="media-body ml-3 mt-2">
+                <p> No. </p>
+            </div>
+        </div>
+        <h3 class = "mt-5">Where the shipment will arrive </h3>
+        <p class = "mt-2"><%= @purchase[:purchase_location] %></p>
+    </div>
+</dif>
+© 2020 GitHub, Inc.

@@ -5,31 +5,34 @@ DB = Sequel.connect(connection_string)                                          
 #######################################################################################
 
 # Database schema - this should reflect your domain model
-DB.create_table! :events do
+DB.create_table! :purchases do
   primary_key :id
   String :title
-  String :description, text: true
-  String :date
-  String :location
-end
-DB.create_table! :rsvps do
-  primary_key :id
-  foreign_key :event_id
-  Boolean :going
-  String :name
-  String :email
+  String :cost
+  String :purchase_date
   String :comments, text: true
+  String :purchase_location
+end
+DB.create_table! :bandwagoners do
+  primary_key :id
+  foreign_key :purchase_id
+  foreign_key :user_id
+  Boolean :onwagon
+  String :comments, text: true
+  Integer :number_of_items
 end
 
 # Insert initial (seed) data
-events_table = DB.from(:events)
+purchases_table = DB.from(:purchases)
 
-events_table.insert(title: "Bacon Burger Taco Fest", 
-                    description: "Here we go again bacon burger taco fans, another Bacon Burger Taco Fest is here!",
-                    date: "June 21",
-                    location: "Kellogg Global Hub")
+purchases_table.insert(title: "iPhone 11", 
+                    cost: "$749",
+                    purchase_date: "June 21 2020",
+                    comments: "Woow can't wait to get the new iPhone",
+                    purchase_location: "Apple Old Orchard")
 
-events_table.insert(title: "Kaleapolooza", 
-                    description: "If you're into nutrition and vitamins and stuff, this is the event for you.",
-                    date: "July 4",
-                    location: "Nowhere")
+purchases_table.insert(title: "Thursday Boots", 
+                    cost: "$230",
+                    purchase_date: "August 03 2020",
+                    comments: "Awesome new D2C brand, check it out",
+                    purchase_location: "online")

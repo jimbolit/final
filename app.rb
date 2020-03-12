@@ -48,8 +48,8 @@ get "/purchase/:id/bandwagoner/new" do
     view "new_bandwagoner"
 end
 
-post "/purchase/:id/bandwagon/thanks" do
-    @purchase = bandwagoners_table.where(id: params[:id]).to_a[0]
+get "/purchase/:id/bandwagon/thanks" do
+    @purchase = purchases_table.where(id: params[:id]).to_a[0]
     bandwagoners_table.insert(purchase_id: params["id"],
                        user_id: session["user_id"],
                        onwagon: params["onwagon"],

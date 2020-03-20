@@ -10,7 +10,7 @@
             </div>    
         </div>
         <h3 class = "mt-5"> Final date to get on board: <%= @purchase[:purchase_date] %> </h3>
-        <h3 class = "mt-5"> What the first bandwagoner is saying </h3>
+        <h3 class = "mt-5"> What the first bandwagoner, <%= @users_table.where(id: @purchase[:user_id]).to_a[0][:name] %>, is saying </h3>
             <p class = "mt-2"> <%= @purchase[:comments] %></p>
         <h3 class = "mt-5"> Other members on the bandwagon </h3>
              <% for bandwagoner in @bandwagoners %>
@@ -33,5 +33,16 @@
         </div>
         <h3 class = "mt-5">Where the shipment will arrive </h3>
         <p class = "mt-2"><%= @purchase[:purchase_location] %></p>
+        <iframe
+        width="300"
+        height="300"
+        frameborder="0" style="border:0"
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCtovsQvkIUWlNqtYwXY87gEd4ZSmJEhMw
+          &q=<%=@lat_long%>&zoom=10" allowfullscreen>
+      </iframe>
+      <p>ß
+  
     </div>
 </dif>
+
+<h1> <%=@lat_long%> </h1>

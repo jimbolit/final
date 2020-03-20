@@ -31,15 +31,28 @@ end
 
 # Insert initial (seed) data
 purchases_table = DB.from(:purchases)
+bandwagoners_table = DB.from(:bandwagoners)
+users_table = DB.from(:users)
 
 purchases_table.insert(title: "iPhone 11", 
                     cost: "$749",
                     purchase_date: "June 21 2020",
                     comments: "Woow can't wait to get the new iPhone",
-                    purchase_location: "Apple Old Orchard")
+                    purchase_location: "Apple Old Orchard",
+                    user_id: 1)
 
 purchases_table.insert(title: "Thursday Boots", 
                     cost: "$230",
                     purchase_date: "August 03 2020",
                     comments: "Awesome new D2C brand, check it out",
-                    purchase_location: "online")
+                    purchase_location: "online",
+                    user_id: 1)
+
+bandwagoners_table.insert(purchase_id: 1, 
+                    user_id: 1,
+                    comments: "Awesome new D2C brand, check it out",
+                    number_of_items: 2)
+
+users_table.insert(name: "Jim", 
+                    email: "jim@lit",
+                    password: "lit")

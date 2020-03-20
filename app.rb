@@ -29,6 +29,15 @@ get "/" do
 end
 
 post "/purchases/thanks" do
+    
+    location = params["purchase_location"]
+    results = Geocoder.search("location")
+    lat_long = results.first.coordinates
+    lat = lat_long[0]
+    long = lat_long[1]
+    @lat_long = "#{lat},#{long}"
+    
+    
     purchases_table.insert(user_id: session["user_id"],
                            title: params["title"],
                            cost: params["cost"],
@@ -91,3 +100,6 @@ get "/logout" do
     @current_user = nil
     view "logout"
 end
+
+pp @lat_long
+pp @purchase

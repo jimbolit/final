@@ -1,6 +1,22 @@
+<div class="jumbotron jumbotron-fluid bg-dark">
+  
+  <div class="jumbotron-background">
+    <img src="containers.jpg" class="blur ">
+  </div>
+
+  <div class="container text-white">
+
+    <h1 class="display-4">Bulk buy products with other people using Product Combinator</h1>
+    <p class="lead">Post a product you intend to bulk buy, and let other people sign up to buy off you, or sign up to someone elses product!</p>
+    <hr class="my-4">
+
+  </div> 
+</div>
+
+
 <div class="row">
     <div class="col-sm-8">
-        <h1> All Purchases </h1>
+        <h1> All Products </h1>
         <% for purchases in @purchases %>
             <h4 class= "mt-5"> <a href = "/purchase/<%= purchases[:id]%>"> <%=purchases[:title]%> </a> </h4>
         <% end %>

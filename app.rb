@@ -19,6 +19,10 @@ purchases_table = DB.from(:purchases)
 bandwagoners_table = DB.from(:bandwagoners)
 users_table = DB.from(:users)
 
+
+
+# Code starts
+
 before do
     @current_user = users_table.where(id: session["user_id"]).to_a[0]
 end
@@ -66,6 +70,20 @@ post "/purchase/:id/bandwagon/thanks" do
                        user_id: session["user_id"],
                        number_of_items: params["number_of_items"],
                        comments: params["comments"])
+    
+   
+# Twilio API credentials and connection
+    account_sid = ENV["twilio_sid"]
+    auth_token = ENV["twilio_token"]
+    client = Twilio::REST::Client.new(account_sid, auth_token)
+ 
+# send the SMS from your trial Twilio number to your verified non-Twilio number 
+    client.messages.create(
+    from: "+12076186686", 
+    to: "+642102377971",
+    body: "Thanks for joining the #{@purchase[:title]} bandwagon. This text confirms that you are on the bandwagon!"
+    )
+  
     view "bandwagon_thanks"
 end
 

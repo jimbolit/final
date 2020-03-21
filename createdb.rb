@@ -1,5 +1,6 @@
 # Set up for the application and database. DO NOT CHANGE. #############################
-require "sequel"                                                                      #
+require "sequel"
+require "bcrypt"                                                                      #
 connection_string = ENV['DATABASE_URL'] || "sqlite://#{Dir.pwd}/development.sqlite3"  #
 DB = Sequel.connect(connection_string)                                                #
 #######################################################################################
@@ -38,21 +39,30 @@ purchases_table.insert(title: "iPhone 11",
                     cost: "$749",
                     purchase_date: "June 21 2020",
                     comments: "Woow can't wait to get the new iPhone",
-                    purchase_location: "Apple Old Orchard",
+                    purchase_location: "Apple Store, Old Orchard, Skokie",
                     user_id: 1)
 
 purchases_table.insert(title: "Thursday Boots", 
                     cost: "$230",
                     purchase_date: "August 03 2020",
                     comments: "Awesome new D2C brand, check it out",
-                    purchase_location: "online",
+                    purchase_location: "E2 Apartments Evanston",
                     user_id: 1)
 
 bandwagoners_table.insert(purchase_id: 1, 
-                    user_id: 1,
-                    comments: "Awesome new D2C brand, check it out",
+                    user_id: 2,
+                    comments: "Wow love this!!",
+                    number_of_items: 2)
+
+bandwagoners_table.insert(purchase_id: 2, 
+                    user_id: 2,
+                    comments: "I really needed some new leather boots",
                     number_of_items: 2)
 
 users_table.insert(name: "Jim", 
                     email: "jim@lit",
-                    password: "lit")
+                    password: BCrypt::Password.create("lit"))
+
+users_table.insert(name: "Damo", 
+                    email: "damo@fun",
+                    password: BCrypt::Password.create("fun"))

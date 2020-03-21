@@ -1,17 +1,18 @@
 # Set up for the application and database. DO NOT CHANGE. #############################
-require "sinatra"                                                                     #
-require "sinatra/reloader" if development?                                            #
-require "sequel"                                                                      #
-require "logger"                                                                      #
-require "twilio-ruby"                                                                 #
-require "bcrypt"                                                                      #
+require "sinatra"                                                               
+require "sinatra/reloader" if development?                                      
+require "sequel"                                                                
+require "logger"                                                                
+require "twilio-ruby"                                                           
+require "bcrypt"   
+require "geocoder"                                                             
 connection_string = ENV['DATABASE_URL'] || "sqlite://#{Dir.pwd}/development.sqlite3"  #
-DB ||= Sequel.connect(connection_string)                                              #
-DB.loggers << Logger.new($stdout) unless DB.loggers.size > 0                          #
-def view(template); erb template.to_sym; end                                          #
-use Rack::Session::Cookie, key: 'rack.session', path: '/', secret: 'secret'           #
-before { puts; puts "--------------- NEW REQUEST ---------------"; puts }             #
-after { puts; }                                                                       #
+DB ||= Sequel.connect(connection_string)                                        
+DB.loggers << Logger.new($stdout) unless DB.loggers.size > 0                    
+def view(template); erb template.to_sym; end                                    
+use Rack::Session::Cookie, key: 'rack.session', path: '/', secret: 'secret'     
+before { puts; puts "--------------- NEW REQUEST ---------------"; puts }       
+after { puts; }                                                                 
 #######################################################################################
 
 purchases_table = DB.from(:purchases)
@@ -29,15 +30,7 @@ get "/" do
 end
 
 post "/purchases/thanks" do
-    
-    location = params["purchase_location"]
-    results = Geocoder.search("location")
-    lat_long = results.first.coordinates
-    lat = lat_long[0]
-    long = lat_long[1]
-    @lat_long = "#{lat},#{long}"
-    
-    
+        
     purchases_table.insert(user_id: session["user_id"],
                            title: params["title"],
                            cost: params["cost"],
@@ -51,6 +44,14 @@ get "/purchase/:id" do
     @purchase = purchases_table.where(id: params["id"]).to_a[0]
     @bandwagoners = bandwagoners_table.where(purchase_id: @purchase[:id]).to_a
     @users_table = users_table
+
+    @location = @purchase[:purchase_location]
+    @results = Geocoder.search("#{@location}")
+    lat_long = @results.first.coordinates
+    lat = lat_long[0]
+    long = lat_long[1]
+    @coords = "#{lat},#{long}"
+
     view "purchase"
 end
 
@@ -100,6 +101,3 @@ get "/logout" do
     @current_user = nil
     view "logout"
 end
-
-pp @lat_long
-pp @purchase

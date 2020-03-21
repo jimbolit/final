@@ -19,7 +19,10 @@ purchases_table = DB.from(:purchases)
 bandwagoners_table = DB.from(:bandwagoners)
 users_table = DB.from(:users)
 
-
+# Twilio API credentials and connection
+    account_sid = ENV["twilio_sid"]
+    auth_token = ENV["twilio_token"]
+    client = Twilio::REST::Client.new(account_sid, auth_token)
 
 # Code starts
 
@@ -70,12 +73,6 @@ post "/purchase/:id/bandwagon/thanks" do
                        user_id: session["user_id"],
                        number_of_items: params["number_of_items"],
                        comments: params["comments"])
-    
-   
-# Twilio API credentials and connection
-    account_sid = ENV["twilio_sid"]
-    auth_token = ENV["twilio_token"]
-    client = Twilio::REST::Client.new(account_sid, auth_token)
  
 # send the SMS from your trial Twilio number to your verified non-Twilio number 
     client.messages.create(
